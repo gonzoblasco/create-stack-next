@@ -37,3 +37,11 @@ tests/
 ## Convenciones
 
 Ver `AGENTS.md` para convenciones de código y cómo trabajar con agentes.
+
+## AI agents
+
+Este proyecto está preparado para trabajar con agentes:
+
+- `AGENTS.md` — instrucciones agnósticas
+- `.openclaw/` y `.agents/` — config y prompts
+- `npm run agent` — abre sesión con contexto precargado (AGENTS.md + docs/)
