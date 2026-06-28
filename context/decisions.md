@@ -114,17 +114,28 @@ workspace/
 
 ---
 
-## Decisiones pendientes
+## Decisiones cerradas
 
 | ID | Tema | Estado | Notas |
 |---|---|---|---|
-| D007 | Linter (Biome) | ✅ Cerrada | Arriba en este archivo. |
-| D008 | Testing (Vitest + Playwright) | ✅ Cerrada | Arriba en este archivo. |
-| D009 | AI agent config | ⏳ Por cerrar ahora | Ver sección abajo. |
-| D010 | Validación runtime | ⏳ Por cerrar ahora | Ver sección abajo. |
-| D011 | Estilo del scaffolder (opinionated 100%) | ✅ Cerrada | Implícita desde D006. |
+| D001 | Tipo de producto (scaffolder A3) | ✅ | 2026-06-27 |
+| D002 | Scope del MVP (app web full-stack) | ✅ | 2026-06-27 |
+| D003 | Distribución (npm package) | ✅ | 2026-06-27 |
+| D004 | Nombre (`create-stack-next`) | ✅ | 2026-06-28 — verificado libre en npm |
+| D005 | Estructura workspace (`projects/<nombre>/`) | ✅ | 2026-06-27 |
+| D006 | Framework (Next.js, definido por sufijo `-next`) | ✅ | 2026-06-27 |
+| D007 | Linter (Biome) | ✅ | 2026-06-27 |
+| D008 | Testing (Vitest + Playwright) | ✅ | 2026-06-27 |
+| D009 | AI agent config (AGENTS.md + .openclaw/ bonus) | ✅ | 2026-06-28 |
+| D010 | Validación runtime (Zod) | ✅ | 2026-06-28 |
+| D011 | Estilo del scaffolder (opinionated 100%) | ✅ | 2026-06-28 (implícita desde D006) |
+| D012 | Modo de trabajo (pair programming + docs vivas) | ✅ | 2026-06-28 |
+| D013 | Agentes como archivos de roles, no código | ✅ | 2026-06-28 |
+| D014 | Repo público (GitHub) | ✅ | 2026-06-28 |
+| D015 | Lockfile del scaffolder (commitear) | ✅ | 2026-06-28 |
+| D016 | Ignorar artefactos de prueba local | ✅ | 2026-06-28 |
 
-*(No quedan decisiones abiertas después de cerrar D009 y D010. Ver detalle abajo.)*
+**Total: 16 decisiones cerradas, 0 pendientes.**
 
 ---
 
@@ -243,3 +254,111 @@ $ npx create-stack-next my-app
 **Por qué no Valibot:** promisorio pero todavía sin la masa crítica. Cuando la tenga, migrar es relativamente fácil porque las APIs son similares.
 
 **Por qué no TypeBox:** JSON Schema-first es una abstracción extra que no necesitamos. Más complejo de usar, menos ejemplos disponibles.
+
+---
+
+## D012 — Modo de trabajo: pair programming + documentación viva
+**Fecha:** 2026-06-28
+**Estado:** ✅ Confirmada
+
+**Contexto:** durante M0 y M1 desarrollamos un patrón de trabajo que no es estándar. Gonzo lo pidió explícito al inicio ("documentá todo") y al final ("registra todo... el modo que abordamos este proyecto").
+
+**Decisión:** el modo de trabajo es:
+1. **Pair programming** entre Gonzo y el asistente (Tech Lead) en M0-M1
+2. **Documentación viva** durante todo el proceso (README, mvp-spec, decisions, conversations, agents)
+3. **Decisiones con ID** (D001...) cerradas con fecha y justificación
+4. **Sub-agentes** (PO, Frontend, Backend, QA, Designer, Content, Beta Tester) documentados como roles para M2+
+5. **Nada queda en limbo**: se cierra o se pausa explícitamente
+
+**Justificación:**
+- M0-M1 son chicos y secuenciales: pair programming evita delegación ciega.
+- Documentación viva permite retomar en cualquier sesión sin pedir contexto.
+- Decisiones con justificación permiten revisar 6 meses después sin "¿por qué hicimos esto?".
+- Sub-agentes como archivos (no como código que se ejecuta) son durables y reutilizables.
+
+**Formalizado en:** `WORKFLOW.md` (en workspace raíz) — patrón para futuros proyectos.
+
+---
+
+## D013 — Agentes: archivos de roles, no código que se ejecuta
+**Fecha:** 2026-06-28
+**Estado:** ✅ Confirmada
+
+**Contexto:** Gonzo preguntó "qué construimos y qué no" respecto a los agentes. Aclaramos que no construimos código que se ejecute como agente — solo archivos de roles para futura referencia.
+
+**Decisión:** los "agentes" del proyecto son **archivos Markdown** (`context/agents/AGENT-<rol>.md`), no procesos que se ejecutan. Documentan:
+- Rol y responsabilidades
+- Herramientas que usarían
+- Brief del proyecto actual
+- Tareas pendientes para M2+
+- Lo que NO hacen
+
+**Justificación:**
+- Un archivo es durable: sobrevive resets de sesión, lo lee cualquier LLM en cualquier momento.
+- Un proceso (sesión de `sessions_spawn`) es efímero: vive lo que dura la sesión.
+- Para M2+ se pueden spawnear agentes reales usando estos archivos como brief.
+
+**Cuándo spawnear agentes reales:**
+- Trabajo grande (>2h de un humano)
+- Paralelizable (no secuencial)
+- Decisiones de diseño ya cerradas
+
+**Roles documentados (8):**
+- Tech Lead (orquestador, soy yo)
+- Product Owner
+- Frontend Dev
+- Backend Dev
+- QA Engineer
+- Designer / UX
+- Content / Copy
+- Beta Tester / User Proxy
+
+---
+
+## D014 — Repo público: `gonzoblasco/create-stack-next`
+**Fecha:** 2026-06-28
+**Estado:** ✅ Confirmada
+
+**Contexto:** Gonzo creó el repo en GitHub y nos pasó la URL.
+
+**Decisión:** repo público en `git@github.com:gonzoblasco/create-stack-next.git`. Estructura:
+- `main` branch por default
+- Repo solo del proyecto (`projects/create-stack-next/`), NO de todo el workspace
+- Cada commit documentado en el mensaje
+
+**Justificación:**
+- Repo público = descubrible, otros pueden contribuir.
+- Separar del workspace evita pushear archivos privados (MEMORY.md, USER.md, etc.).
+- Mensajes de commit descriptivos = changelog implícito.
+
+**Primer commit (2026-06-28 02:30 GMT-3):** `feat: initial release of create-stack-next` con 45 archivos.
+
+---
+
+## D015 — Lockfile del scaffolder: commitearlo
+**Fecha:** 2026-06-28
+**Estado:** ✅ Confirmada
+
+**Decisión:** `package-lock.json` del scaffolder se commitea.
+
+**Justificación:**
+- Reproducibilidad: quien clona el repo obtiene las mismas versiones exactas.
+- CI/CD estable: tests corren contra las mismas deps que开发和.
+- npm estándar: la convención de npm es commitear el lockfile.
+
+**Por qué NO ignorar:** si lo ignoramos, cada `npm install` podría traer versiones distintas y romper el scaffolder.
+
+---
+
+## D016 — Ignorar artefactos de prueba local del scaffolder
+**Fecha:** 2026-06-28
+**Estado:** ✅ Confirmada
+
+**Decisión:** en `.gitignore` se ignoran `my-test-app/`, `my-app/`, `test-app/` — directorios que se generan al probar el scaffolder localmente.
+
+**Justificación:**
+- Son artefactos de prueba, no parte del proyecto.
+- Si los commiteáramos, llenarían el repo de basura cada vez que Gonzo pruebe.
+- El scaffolder puede generar proyectos con cualquier nombre, así que la convención es ignorar los nombres comunes.
+
+**Por qué no todo `*/`:** porque el template del scaffolder es un directorio válido que SÍ se commitea. Solo ignoramos los nombres específicos que usamos para probar localmente.
