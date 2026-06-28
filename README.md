@@ -1,169 +1,115 @@
 # create-stack-next
 
-> Scaffolder opinado para proyectos de app web full-stack. Un solo comando y tenés un proyecto moderno, testeado, lintado y listo para que un AI agent lo habite.
+> Scaffolder opinado para Next.js 15. Un solo comando y tenés un proyecto moderno, testeado, lintado y listo para que un AI agent lo habite.
+
+[![npm version](https://img.shields.io/npm/v/create-stack-next.svg)](https://www.npmjs.com/package/create-stack-next)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
 
-## Estado actual
+## Instalación
 
-**Versión actual:** `0.2.0` (M2 + tests del scaffolder)
+```bash
+npx create-stack-next my-app
+```
 
-**Repo:** https://github.com/gonzoblasco/create-stack-next
-**npm:** https://www.npmjs.com/package/create-stack-next
-**Changelog:** [CHANGELOG.md](CHANGELOG.md)
-
-**Última actualización:** 2026-06-28
-
-**M1 + M2 completados:**
-- [x] Scaffolder funcional + template completo
-- [x] Repo público + npm publish (`0.1.0`)
-- [x] `npm run agent` + `.openclaw/` + `.agents/` + `docs/`
-- [x] 18 decisiones cerradas (D001–D018)
-
-**Próximo:** M4 Lite (README + video + release note)
+Eso es todo. El comando genera un proyecto Next.js 15 listo para empezar a desarrollar.
 
 ---
 
-## Tesis del producto
+## Qué incluye
 
-`npx create-<algo>` existe desde siempre. Todos hacen lo mismo: te dan un template vacío y se olvidan de vos.
+El proyecto generado viene con todo preconfigurado:
 
-Nuestro diferenciador: scaffolder que **asume cómo trabaja un dev moderno en 2026** y lo deja preconfigurado en un solo comando:
-
-- Testing (Vitest + Playwright)
-- Lint + format (Biome, no ESLint+Prettier por separado)
-- Type safety (TS strict + Zod en bordes)
-- **AI agents integrados** — `AGENTS.md` (agnóstico) + `.openclaw/` (buena práctica para usuarios de OpenClaw)
-- CI básico (GitHub Actions)
-- Git hooks (Husky + lint-staged)
-- Estructura de directorios opinada
-- README con sección "cómo trabaja este repo"
-
-**Valor:** alguien lo prueba y dice *"ah, ok, esto es lo que necesitaba, ya no tengo que decidir 40 cosas cada vez"*.
+- **Next.js 15** + React 19 + TypeScript estricto
+- **Biome** (lint + format en un solo comando)
+- **Vitest** (tests unitarios) + **Playwright** (tests e2e)
+- **Zod** para validación runtime
+- **GitHub Actions** (CI + e2e)
+- **AGENTS.md** + `.openclaw/` + `.agents/` (integración con AI agents)
+- `docs/` con arquitectura, decisiones y guía de contribución
 
 ---
 
-## Por qué este proyecto y no otros
+## ¿Por qué este y no create-next-app?
 
-Evaluamos 3 opciones de scaffolder/CLI para devs (ver conversación del 2026-06-27):
+| Aspecto | create-next-app | create-stack-next |
+|---------|-----------------|-------------------|
+| Testing | Ninguno | Vitest + Playwright configurados |
+| Linter | ESLint + Prettier | Biome (un solo binario) |
+| TypeScript | Básico | Estricto + `noUncheckedIndexedAccess` |
+| AI agents | Ninguno | `AGENTS.md` + prompts listos para usar |
+| CI | Ninguno | GitHub Actions incluido |
+| Filosofía | Mínimo | Opinado con defaults 2026 |
 
-| Opción | Idea | Veredicto |
-|---|---|---|
-| A1 | PR reviewer local con tests/lint inline | ❌ Copilot ya cubre el 70%. Diferenciarse cuesta mucho. |
-| A2 | Doc linter que entiende código | ❌ Dolor real pero nicho chico. |
-| **A3** | **Scaffolder opinado con defaults 2026** | **✅ Un usuario lo prueba una vez por proyecto y vuelve a usarlo 20+ veces al año.** |
-
-Razón principal: **ratio de uso**. Un scaffolder bien hecho se usa cada vez que arrancás un proyecto nuevo. Un PR reviewer compite con Copilot. Un doc linter compite con "lo arreglo a mano".
-
----
-
-## Público objetivo (hipótesis inicial)
-
-**Primario:** devs que arrancan proyectos nuevos con frecuencia y están cansados de tomar las mismas 40 decisiones cada vez.
-
-**Hipótesis a validar:** ¿prefieren un scaffolder muy opinado (un solo camino) o uno configurable (preguntas al inicio)? Mi corazonada: **opinados por default, con flags para customizar**.
+**Ideal si:** arrancás proyectos con frecuencia y no querés repetir las mismas 40 decisiones cada vez.
 
 ---
 
-## Stack propuesto (pendiente decidir)
+## Casos de uso recomendados
 
-- **Runtime:** Node.js >= 20
-- **Lenguaje del scaffolder:** TypeScript
-- **Plantilla generada:** TS estricto + React 19 + (Next.js | Astro | Remix — decidir)
-- **Testing:** Vitest (unit) + Playwright (e2e)
-- **Lint/format:** Biome
-- **Validación:** Zod
-- **CI:** GitHub Actions
-- **Hooks:** Husky + lint-staged
-- **AI agents:** archivo `.openclaw/agents.md` o equivalente preconfigurado
+- Proyectos personales o de equipo donde querés arrancar rápido con buena base
+- Cuando usás (o querés usar) AI agents para desarrollar
+- Cuando valorás tener tests, lint y CI desde el día 1
 
 ---
 
-## Roadmap tentativo
+## AI agents integrados
 
-### M0 — Definición ✅ CERRADO (2026-06-28)
-- [x] Tesis validada
-- [x] Stack elegido
-- [x] Nombre confirmado (`create-stack-next`, verificado libre en npm)
-- [x] MVP spec escrito (`mvp-spec.md`)
+El proyecto incluye:
 
-### M1 — MVP ✅ CERRADO (2026-06-28)
-- [x] Repo `create-stack-next` inicializado
-- [x] Scaffolder funcional (`src/cli.ts`)
-- [x] Template base (`template/`)
-- [x] Probado localmente
-- [x] Publicado a npm (`create-stack-next@0.1.0`)
-- [x] Repo público en GitHub
+- `AGENTS.md` — instrucciones agnósticas (funciona con OpenClaw, Claude Code, Cursor, etc.)
+- `.openclaw/` — config y prompts específicos de OpenClaw
+- `.agents/` — config genérica + prompts compartidos
+- `npm run agent` — abre sesión con el agente ya contextualizado
 
-### M2 — AI-native ✅ CERRADO (2026-06-28)
-- [x] `npm run agent`
-- [x] Templates de prompts (feature, refactor, bugfix, tests)
-- [x] `.openclaw/` + `.agents/` + `docs/`
-- [x] Ver D018 en `context/decisions.md`
+---
 
-### M3 — Familia de scaffolders (pausado)
-- Ver `FUTURE.md` para el registro de ideas futuras.
+## Roadmap
 
-### M4 — Adopción (Lite)
+### M0 — Definición ✅
+### M1 — MVP ✅
+### M2 — AI-native ✅
+### M3 — Familia de scaffolders ⏸️ Pausado
+
+Ver [`FUTURE.md`](FUTURE.md) para el registro de ideas futuras (`create-stack-remix`, `create-stack-astro`, etc.).
+
+### M4 — Adopción (Lite) ⏳ En progreso
+
 - [ ] README pulido
 - [ ] Video demo (2-4 min)
-- [ ] Release note / Blog post
-- [ ] Presencia básica en listas relevantes
-
-> M3 queda pausado hasta que `create-stack-next` esté más maduro. M4 se hace en versión lite (sin docs site completo).
-
-### M5 — Templates adicionales
-- [ ] `--template api`
-- [ ] `--template cli`
-- [ ] (Revierte D006/D011 parcialmente si la demanda lo justifica)
+- [ ] Release note
+- [ ] Presencia básica
 
 ---
 
-## Cómo se está construyendo
+## Comandos del proyecto generado
 
-**Orquestador:** Gonzo (asistente OpenClaw del usuario)
-
-**Equipo de sub-agentes planteado (a spawnear cuando haya MVP spec):**
-- Tech Lead / Orquestador ← Gonzo
-- Product Owner
-- Frontend Dev
-- Backend Dev
-- Diseñador (cuando haya wireframes)
-- Content / Copy (cuando haya UI)
-- QA Engineer
-- Beta Tester / User Proxy
-
-**Decisión de proceso:** arrancar con 4 agentes críticos (Frontend, Backend, QA, PO) y sumar el resto cuando haya algo testeable.
+```bash
+npm run dev          # servidor de desarrollo
+npm run build        # build de producción
+npm run lint         # Biome (check)
+npm run lint:fix     # Biome con --write
+npm run typecheck    # verificación de tipos
+npm run test:run     # tests unitarios
+npm run test:e2e     # tests e2e
+npm run agent        # sesión con OpenClaw
+```
 
 ---
 
-## Próximos pasos
+## Contribuir
 
-- Tests más profundos del scaffolder
-- M3 — Familia de scaffolders (`create-stack-remix`, etc.)
-
----
-
-## Referencias
-
-- Conversación de origen: 2026-06-27 22:36–23:20 GMT-3
-- `context/decisions.md` — log de todas las decisiones tomadas con justificación
-- `context/conversations/` — bitácora de las conversaciones que definieron el proyecto
+Si querés contribuir, mirá [`docs/contributing.md`](docs/contributing.md) en el template generado.
 
 ---
 
-## Estado actual (2026-06-28)
+## Licencia
 
-**M2 cerrado + tests del scaffolder.** ✅
+MIT
 
-### Lo que está hecho
+---
 
-- M0, M1 y M2 completos
-- `npm run agent`, `.openclaw/`, `.agents/`, `docs/`
-- 16 tests del scaffolder pasando
-- Publicado en npm (`0.2.0`)
+**Creado con ❤️ por Gonzo y Gonza (OpenClaw)**
 
-### Pendiente
-
-- [ ] Tests más profundos del scaffolder
-- [ ] M3 — Familia de scaffolders
+> Primera utilidad publicada. M4 Lite en progreso.
