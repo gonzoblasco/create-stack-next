@@ -18,11 +18,11 @@
 - [x] Generación de proyectos lista (`node ./dist/index.js my-app`)
 - [x] Todos los checks pasan en el proyecto generado (lint, typecheck, test, build)
 - [x] Repo público creado en GitHub
+- [x] Publicado en npm como `create-stack-next@0.1.0`
 
-**Pendiente para publicar:**
-- [ ] `npm publish`
+**Pendiente:**
+- [ ] M2 — AI-native: `npm run agent` + templates de prompts + `.openclaw/` específico (ver D018)
 - [ ] Tests del scaffolder mismo
-- [ ] M2 — AI-native
 
 ---
 
@@ -89,18 +89,19 @@ Razón principal: **ratio de uso**. Un scaffolder bien hecho se usa cada vez que
 - [x] Nombre confirmado (`create-stack-next`, verificado libre en npm)
 - [x] MVP spec escrito (`mvp-spec.md`)
 
-### M1 — MVP (próximo)
-- [ ] Repo `create-stack-next` inicializado
-- [ ] Scaffolder funcional (`src/cli.ts`)
-- [ ] Template base (`template/`)
-- [ ] Probar localmente
-- [ ] Publicar a npm
-- [ ] Repo público en GitHub
+### M1 — MVP ✅ CERRADO (2026-06-28)
+- [x] Repo `create-stack-next` inicializado
+- [x] Scaffolder funcional (`src/cli.ts`)
+- [x] Template base (`template/`)
+- [x] Probado localmente
+- [x] Publicado a npm (`create-stack-next@0.1.0`)
+- [x] Repo público en GitHub
 
-### M2 — AI-native
+### M2 — AI-native ⏳
 - [ ] Comando `npm run agent`
 - [ ] Templates de prompts por tipo de tarea
 - [ ] Integración profunda con OpenClaw
+- [ ] Ver criterio de cierre en D018
 
 ### M3 — Familia de scaffolders
 - [ ] `create-stack-remix`
@@ -140,9 +141,9 @@ Razón principal: **ratio de uso**. Un scaffolder bien hecho se usa cada vez que
 
 ## Próximos pasos
 
-- Publicar a npm (`npm publish`)
-- Tests del scaffolder
-- M2 — AI-native
+- Implementar M2 (D018): `npm run agent` + templates de prompts + `.openclaw/` específico
+- Tests del scaffolder mismo
+- M3 — Familia de scaffolders
 
 ---
 
@@ -167,6 +168,6 @@ Razón principal: **ratio de uso**. Un scaffolder bien hecho se usa cada vez que
 
 ### Pendiente
 
-- [ ] `npm publish` (para que funcione con `npx`)
+- [ ] M2 — AI-native: `npm run agent` + templates de prompts + `.openclaw/` específico (ver D018)
 - [ ] Tests del scaffolder mismo
-- [ ] M2 — AI-native
+- [ ] M3 — Familia de scaffolders

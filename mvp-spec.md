@@ -2,9 +2,12 @@
 
 > Documento de brief para sub-agentes y colaboradores. Define el alcance mínimo viable del scaffolder. Si algo no está acá, no es parte del MVP.
 
-**Estado:** 📝 Borrador inicial — listo para revisión.
+**Estado:** ✅ M1 cerrado y publicado. M2 en implementación.
 **Fecha:** 2026-06-28
+**Versión publicada:** `0.1.0` — https://www.npmjs.com/package/create-stack-next
 **M0 cerrado:** ✅ producto, scope, distribución, framework, linter, testing, nombre.
+**M1 cerrado:** ✅ scaffolder funcional + template completo + repo público + npm publish.
+**M2 (AI-native):** ⏳ en implementación — ver D018 en `context/decisions.md`.
 
 ---
 
@@ -223,15 +226,16 @@ export const env = envSchema.parse(process.env);
 
 ---
 
-## 7. AI agent integration (D009)
+## 7. AI agent integration (D009 + D018)
 
-**Pendiente decisión final de Gonzo.** Mi recomendación actual:
+**M1 — D009 ✅:** el template incluye `AGENTS.md` agnóstico (leído por OpenClaw, Claude Code, Cursor, etc.) + `.openclaw/` como bonus específico.
 
-- Incluir `AGENTS.md` en la raíz del proyecto generado.
-- Contenido mínimo: descripción del proyecto, comandos clave (sección 6), convenciones de código, "cómo pedirle cosas a este agente".
-- Si D009 se confirma como "OpenClaw bonus": agregar `.openclaw/` con config mínima (link simbólico o copia).
+**M2 — D018 ⏳:** además del `AGENTS.md`, el template incluye:
+- Comando `npm run agent` que abre una sesión del agente apuntando al proyecto.
+- Templates de prompts en `.openclaw/prompts/` para tareas típicas.
+- `.openclaw/` con config mínima para que el agente habite el proyecto desde el primer momento.
 
-**Por qué:** AGENTS.md es el estándar emergente (lo leen OpenClaw, Claude Code, Cursor, etc.). Escribirlo agnóstico no nos casa con ningún vendor.
+**Por qué:** AGENTS.md es el estándar emergente (lo leen OpenClaw, Claude Code, Cursor, etc.). Escribirlo agnóstico no nos casa con ningún vendor. M2 suma `.openclaw/` específico porque Gonzo usa OpenClaw y queremos integración real, no solo "config vacía".
 
 ---
 
@@ -260,26 +264,29 @@ Si alguien necesita alguna de estas cosas, lo agregamos en M2+.
 
 El MVP está listo cuando **todas** estas son verdaderas:
 
-1. `npx create-stack-next my-app` (corrido en una máquina limpia con Node 22) genera un proyecto funcional en menos de 30 segundos.
-2. `npm run dev` arranca el servidor en :300 sin warnings ni errores.
-3. `npm run lint`, `npm run typecheck`, `npm run test`, `npm run test:e2e` corren todos en verde en el proyecto generado.
-4. El proyecto generado tiene CI configurado: hacer push a GitHub activa los workflows y pasan.
-5. El README del proyecto generado explica claramente cómo arrancar.
-6. Publicar el scaffolder a npm y verificar que `npx create-stack-next@latest` funcione desde cualquier máquina.
-7. Repo público en GitHub con README decente que explique qué es, por qué, y cómo contribuir.
+1. ✅ `npx create-stack-next my-app` (corrido en una máquina limpia con Node 22) genera un proyecto funcional en menos de 30 segundos.
+2. ✅ `npm run dev` arranca el servidor en :300 sin warnings ni errores.
+3. ✅ `npm run lint`, `npm run typecheck`, `npm run test`, `npm run test:e2e` corren todos en verde en el proyecto generado.
+4. ✅ El proyecto generado tiene CI configurado: hacer push a GitHub activa los workflows y pasan.
+5. ✅ El README del proyecto generado explica claramente cómo arrancar.
+6. ✅ Publicar el scaffolder a npm y verificar que `npx create-stack-next@latest` funcione desde cualquier máquina.
+7. ✅ Repo público en GitHub con README decente que explique qué es, por qué, y cómo contribuir.
+
+**M1 cerrado el 2026-06-28 con los 7 criterios cumplidos.**
 
 ---
 
 ## 10. Riesgos abiertos
 
-| Riesgo | Mitigación |
+| Riesgo | Estado |
 |---|---|
-| Next.js 15 / React 19 pueden tener bugs al momento de release | Fijar versiones con `~` no `^`, actualizar conscientemente |
-| Biome puede no cubrir alguna regla crítica que un usuario espera | Permitir `biome-ignore` con comentario, tener escape hatch |
-| `npx` puede tener rate limiting o problemas de red | Documentar fallback: `npm i -g create-stack-next && create-stack-next my-app` |
-| El squat `create-stack` (sin sufijo) en npm puede confundir | Documentar en README que somos `-next`, no `create-stack` |
-| Versión de Node del usuario: si tiene < 20, falla | Validar versión al inicio del scaffolder, mensaje claro |
-| Conflictos con `--git` si el usuario ya tiene git config rara | Validar git user.name/user.email, abortar con instrucción si falta |
+| Next.js 15 / React 19 pueden tener bugs al momento de release | 🟡 Vigente — fijado con `~` en vez de `^` para updates controlados |
+| Biome puede no cubrir alguna regla crítica que un usuario espera | 🟢 Mitigado — `biome-ignore` documentado como escape hatch |
+| `npx` puede tener rate limiting o problemas de red | 🟢 Mitigado — documentado fallback con `npm i -g` en README |
+| El squat `create-stack` (sin sufijo) en npm puede confundir | 🟢 Vigente — sigue siendo squat (0.0.4, sin uso), no bloquea pero confunde |
+| Versión de Node del usuario: si tiene < 20, falla | 🟡 Vigente — `engines.node: ">=20"` en package.json, mensaje al inicio del scaffolder |
+| Conflictos con `--git` si el usuario ya tiene git config rara | 🟡 Vigente — `git init` falla limpio si no hay user.name/user.email |
+| Tests del scaffolder mismo (no solo del template) | 🟡 Vigente — pendiente, paralelo a M2 |
 
 ---
 
@@ -306,8 +313,7 @@ Esto NO es parte del MVP. Es el siguiente paso del usuario, no nuestro.
 
 ---
 
-**Próximo paso después de este spec:**
-1. Gonzo revisa y aprueba (o ajusta).
-2. Cierro M0 formalmente.
-3. Spawnear equipo de sub-agentes con este spec como brief.
-4. Empezar M1: implementar scaffolder + template mínimo.
+**Próximo paso:**
+1. Implementar M2 (D018): `npm run agent` + templates de prompts + `.openclaw/` específico.
+2. Tests del scaffolder mismo (paralelo, no bloqueante).
+3. Cerrar M3 cuando haya demanda: familia `create-stack-remix`, `create-stack-astro`, `create-stack-sveltekit`.

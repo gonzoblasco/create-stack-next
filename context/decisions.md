@@ -134,8 +134,9 @@ workspace/
 | D014 | Repo público (GitHub) | ✅ | 2026-06-28 |
 | D015 | Lockfile del scaffolder (commitear) | ✅ | 2026-06-28 |
 | D016 | Ignorar artefactos de prueba local | ✅ | 2026-06-28 |
+| D017 | npm publish (`create-stack-next@0.1.0`) | ✅ | 2026-06-28 |
 
-**Total: 16 decisiones cerradas, 0 pendientes.**
+**Total: 17 decisiones cerradas, 0 pendientes.**
 
 ---
 
@@ -362,3 +363,53 @@ $ npx create-stack-next my-app
 - El scaffolder puede generar proyectos con cualquier nombre, así que la convención es ignorar los nombres comunes.
 
 **Por qué no todo `*/`:** porque el template del scaffolder es un directorio válido que SÍ se commitea. Solo ignoramos los nombres específicos que usamos para probar localmente.
+
+---
+
+## D017 — npm publish: `create-stack-next@0.1.0`
+**Fecha:** 2026-06-28
+**Estado:** ✅ Confirmada
+
+**Contexto:** M1 cerrado y validado localmente. Repo público ya creado en GitHub. Faltaba el paso final: publicar el scaffolder a npm para que cualquiera pueda usarlo con `npx create-stack-next mi-app`.
+
+**Decisión:** publicar versión `0.1.0` como paquete público en npm registry.
+
+**Justificación:**
+- El producto ya está usable localmente, no tiene sentido demorarlo.
+- 2FA activado en la cuenta: añade seguridad sin fricción real (solo un paso extra).
+- Dry-run ejecutado antes de publicar para validar que el tarball incluye los 38 archivos correctos.
+
+**Datos del publish:**
+- Versión: `0.1.0`
+- Tamaño: 17.8 kB (tarball), 48.3 kB (unpacked)
+- Acceso: `public`
+- URL: https://www.npmjs.com/package/create-stack-next
+
+**Trade-off aceptado:** publicar con 0.1.0 sin esperar tests del scaffolder mismo. Justificación: el template está validado de punta a punta, los tests del scaffolder son para M2+. Empezar con `0.1.0` en vez de `1.0.0` deja claro que es el primer hito público, no un producto "terminado".
+
+---
+
+## D018 — Alcance de M2 (AI-native)
+**Fecha:** 2026-06-28
+**Estado:** ✅ Confirmada
+
+**Contexto:** durante la conversación sobre "tener todo hasta M2 cerrado" quedó claro que M2 estaba vagamente definido en `mvp-spec.md` (§11) como "comando `npm run agent`, templates de prompts por tipo de tarea, integración profunda con OpenClaw". Faltaba definir el criterio de cierre.
+
+**Decisión:** M2 está cerrado cuando se cumplen las tres condiciones siguientes:
+
+1. **`npm run agent` funciona** en un proyecto generado: ejecuta `openclaw` (o equivalente) apuntando al directorio del proyecto, con el `AGENTS.md` ya existente como contexto base.
+2. **Templates de prompts por tipo de tarea** incluidos en `.openclaw/prompts/` (o ubicación equivalente): mínimo "Agregar feature", "Refactor", "Bug fix", "Tests". Cada uno es un Markdown con instrucciones estructuradas.
+3. **Integración con OpenClaw** materializada: el proyecto generado incluye `.openclaw/` con configuración mínima (no hace falta que sea profunda en M2, alcanza con que el agente pueda habitar el proyecto desde el primer momento).
+
+**Lo que NO entra en M2:**
+- Sub-agentes de OpenClaw que ejecuten tareas automáticamente (eso es M3+).
+- Integración con otros vendors de agentes (Claude Code, Cursor) más allá del `AGENTS.md` agnóstico.
+- Tests del scaffolder mismo (paralelo a M2, no bloqueante).
+- Templates de prompts personalizados por tipo de proyecto (mantener genéricos en M2).
+
+**Justificación:**
+- Las tres condiciones son el mínimo para que el scaffolder cumpla la promesa de "AI-native".
+- M2 no es una reescritura: reutiliza todo lo de M1 (template, AGENTS.md, Biome, Vitest, etc.).
+- El `AGENTS.md` ya está en M1 como agnóstico; M2 lo complementa con `.openclaw/` específico.
+
+**Criterio de éxito verificable:** clonar un proyecto generado en una máquina con OpenClaw instalado y correr `npm run agent` debe abrir una sesión con el agente ya contextualizado por el `AGENTS.md` del proyecto.
