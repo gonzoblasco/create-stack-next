@@ -20,7 +20,7 @@
 - [x] `npm run agent` + `.openclaw/` + `.agents/` + `docs/`
 - [x] 18 decisiones cerradas (D001–D018)
 
-**Próximo:** Tests del scaffolder + M3 (familia)
+**Próximo:** M4 Lite (README + video + release note)
 
 ---
 
@@ -101,16 +101,16 @@ Razón principal: **ratio de uso**. Un scaffolder bien hecho se usa cada vez que
 - [x] `.openclaw/` + `.agents/` + `docs/`
 - [x] Ver D018 en `context/decisions.md`
 
-### M3 — Familia de scaffolders
-- [ ] `create-stack-remix`
-- [ ] `create-stack-astro`
-- [ ] `create-stack-sveltekit`
+### M3 — Familia de scaffolders (pausado)
+- Ver `FUTURE.md` para el registro de ideas futuras.
 
-### M4 — Adopción
-- [ ] Docs site
-- [ ] Video demo
-- [ ] Blog post
-- [ ] Presencia en awesome lists
+### M4 — Adopción (Lite)
+- [ ] README pulido
+- [ ] Video demo (2-4 min)
+- [ ] Release note / Blog post
+- [ ] Presencia básica en listas relevantes
+
+> M3 queda pausado hasta que `create-stack-next` esté más maduro. M4 se hace en versión lite (sin docs site completo).
 
 ### M5 — Templates adicionales
 - [ ] `--template api`
