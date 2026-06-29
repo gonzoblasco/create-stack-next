@@ -18,6 +18,7 @@ test-results/
 my-test-app/
 my-app/
 test-app/
+test-agent-app/
 
 # Lockfiles de proyectos generados (los que crea el scaffolder), no del scaffolder mismo.
 # El scaffolder SÍ commitea su package-lock.json para reproducibilidad.
