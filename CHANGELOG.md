@@ -7,6 +7,12 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 
 ---
 
+## [Unreleased]
+
+### Added
+- `CHANGELOG.md` base dentro de la carpeta `template/` para que los nuevos proyectos lo incluyan por defecto.
+- Instrucción en `template/AGENTS.md` obligando a los agentes de IA a mantener actualizado el `CHANGELOG.md` de los proyectos generados.
+
 ## [0.3.0] - 2026-06-28
 
 ### Changed
