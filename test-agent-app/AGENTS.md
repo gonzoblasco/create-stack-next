@@ -21,9 +21,6 @@ App Next.js 15 con TypeScript estricto. Usa App Router, Biome para lint/format, 
 - **Validación runtime con Zod**. Para cualquier input externo (API, env, forms).
 - **Errores**: usar tipos de error específicos, no `throw new Error()` genérico.
 - **Tests**: unit tests al lado del código (`*.test.ts`), e2e en `tests/e2e/`.
-- **Estilo de Código y Biome**: El código debe alinearse estrictamente a las reglas de formateo y linting de Biome. Siempre asegura la ejecución de `npm run lint:fix` tras realizar modificaciones para evitar fallos de CI.
-- **Exclusión de dependencias (Git)**: Las carpetas de dependencias (`node_modules/`) y builds (`.next/`, `dist/`, `build/`) nunca deben ser añadidas al índice de Git. Valida siempre el estado del `.gitignore` ante cualquier adición.
-- **Aserciones robustas en tests**: Evita fallos frágiles en las pruebas por formateo automático. Asegura que aserciones sobre cadenas largas truncadas, comillas o espaciados coincidan exactamente con la salida procesada por el formateador.
 
 ## Comandos clave
 
@@ -52,18 +49,6 @@ npm run agent        # abrir sesión con OpenClaw (usa .openclaw/ + AGENTS.md)
 - `src/lib/` — utilidades, lógica de negocio, servicios
 - `src/test/` — setup de testing
 - `tests/e2e/` — tests e2e con Playwright
-
-## Flujo de Trabajo Obligatorio (AI Agent Workflow)
-
-Como agente de IA que trabaja en este proyecto, DEBES seguir este ciclo de manera autónoma para cada tarea de desarrollo:
-
-1. **Alineación de Requisitos:** Antes de programar, valida los detalles clave del módulo (ej: persistencia, diseño visual, alcance) con el usuario.
-2. **Plan de Implementación:** Si la tarea es compleja, crea un plan de implementación (`implementation_plan.md`) y espera la aprobación explícita del desarrollador.
-3. **Lista de Tareas (`task.md`):** Lleva el control del progreso de las tareas usando marcas `[ ]`, `[/]` y `[x]`.
-4. **Auto-Documentación de Decisiones (ADR):** Si tomas decisiones técnicas o de arquitectura, documéntalas en `docs/decisions.md` (formato ADR).
-5. **Mantenimiento del Árbol de Carpetas:** Si creas nuevos componentes, utilidades o rutas, mantén actualizado el mapa en `docs/architecture.md`.
-6. **Auto-Commit al Cierre de Paso:** Al finalizar con éxito todas las tareas de una fase, realiza el git commit correspondiente de forma atómica y descriptiva.
-7. **Walkthrough:** Genera o actualiza el archivo `walkthrough.md` detallando qué archivos cambiaron y cómo probarlos.
 
 ## Lo que el agente puede hacer
 
