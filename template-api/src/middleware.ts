@@ -6,11 +6,17 @@ export function middleware(request: NextRequest) {
 	const authHeader = request.headers.get("authorization");
 
 	// Si quieres proteger todas las rutas excepto /health, puedes hacerlo así:
-	if (request.nextUrl.pathname.startsWith("/api") && !request.nextUrl.pathname.startsWith("/api/health")) {
+	if (
+		request.nextUrl.pathname.startsWith("/api") &&
+		!request.nextUrl.pathname.startsWith("/api/health")
+	) {
 		if (!authHeader || !authHeader.startsWith("Bearer ")) {
 			return NextResponse.json(
-				{ success: false, error: "Unauthorized - Missing or invalid Bearer token" },
-				{ status: 401 }
+				{
+					success: false,
+					error: "Unauthorized - Missing or invalid Bearer token",
+				},
+				{ status: 401 },
 			);
 		}
 
@@ -19,7 +25,7 @@ export function middleware(request: NextRequest) {
 		if (token !== "demo-token-123") {
 			return NextResponse.json(
 				{ success: false, error: "Forbidden - Invalid token" },
-				{ status: 403 }
+				{ status: 403 },
 			);
 		}
 	}

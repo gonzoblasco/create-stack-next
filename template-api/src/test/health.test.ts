@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
-import { createMocks } from "node-mocks-http";
 import { GET } from "@/app/api/health/route";
+import { createMocks } from "node-mocks-http";
+import { describe, expect, it } from "vitest";
 
 describe("Healthcheck API", () => {
 	it("should return 200 and ok status", async () => {
