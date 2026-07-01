@@ -1,13 +1,20 @@
 # Roadmap: Camino a la v1.0.0 🚀
 
-Este documento detalla el plan de acción estratégico para llevar `create-stack-next` desde su estado actual de MVP hacia su primera versión estable (v1.0.0) lista para la adopción masiva.
+Este documento detalla el plan de acción estratégico para llevar `create-stack-next` desde su estado actual hacia su primera versión estable (v1.0.0) lista para la adopción masiva.
 
 ---
 
-## 📍 Estado Actual (v0.3.x)
-- ✅ **M1 (MVP):** Scaffolder base funcional (Next.js 15, Biome, Vitest, Playwright).
-- ✅ **M2 (AI-Native):** Integración nativa para agentes IA (`AGENTS.md`, `.openclaw/`).
-- ✅ **M4 Lite:** Documentación básica de README y decisiones (ADRs) persistentes.
+## 📍 Estado Actual (v0.6.1)
+- ✅ **Fase 1 (Robustez Absoluta):** CLI testeado, validación de nombres, edge cases de FS y flujo Git robustos.
+- ✅ **Fase 2 (Flexibilidad Interna y DX):** Workspaces, pulido visual con `@clack/prompts`, y template `--template api` finalizados.
+- ⏳ **Fase 3 (Adopción y Documentación):** En progreso.
+
+### Novedades destacadas de v0.6.1
+- 🤖 **AI-Native desde el minuto cero:** todos los proyectos generados incluyen `AGENTS.md`, `ROADMAP.md`, `AGENT_TASKS.md`, `HANDOFF.md` y ADRs semilla en `docs/decisions.md`.
+- ⚡ **Template API (`--template api`):** backend puro con Next.js App Router, Drizzle ORM + SQLite, Zod, utilidades `ApiError` / `successResponse`, middleware Bearer/API Key, y tests en memoria con `node-mocks-http` + Vitest.
+- 🎨 **DX renovada:** `@clack/prompts` con spinners en tiempo real, colores semánticos, cancelaciones limpias (Ctrl+C) y bloque estilizado de "Próximos pasos".
+- 🛠️ **CI/CD nativo:** flujo de GitHub Actions para linting, tipos y tests de Playwright en el repo central.
+- ✅ **55 tests automáticos** corriendo con `npm run test:run`.
 
 ---
 
@@ -16,27 +23,27 @@ La versión 1.0.0 significa que el CLI es **robusto, a prueba de balas en cualqu
 
 Para alcanzar esto, dividiremos el trabajo en las siguientes tres fases:
 
-### 🛠️ Fase 1: Robustez Absoluta y Cobertura (v0.4.x - v0.5.x)
+### 🛠️ Fase 1: Robustez Absoluta y Cobertura (v0.5.x)
 *El objetivo es que el CLI nunca falle de manera inesperada ("crash") bajo ninguna condición local.*
 
-- [x] **Testing Exhaustivo del Scaffolder:** Llevar la cobertura de `cli.test.ts` e `integration.test.ts` para abarcar todos los flujos críticos.
-- [ ] **Garantía Multi-Package Manager:** Validar y soportar oficialmente la generación de proyectos usando `npm`, `pnpm`, `yarn` y `bun`. *(Parsing de flags OK; tests de integración multi-PM pospuestos)*
+- [x] **Testing Exhaustivo del Scaffolder:** Cobertura crítica en `cli.test.ts`, `copy-template.test.ts` e `integration.test.ts`.
 - [x] **Edge Cases de File System:** Manejo amigable y validación temprana si el directorio destino ya existe, no está vacío, o carece de permisos.
-- [x] **Robustez en Inicialización Git:** Fallbacks limpios para `--git` cuando el usuario no tiene configurado su entorno global de Git (`user.name` / `user.email`).
+- [x] **Robustez en Inicialización Git:** Fallbacks limpios cuando el usuario no tiene configurado su entorno global de Git (`user.name` / `user.email`).
+- [ ] **Garantía Multi-Package Manager:** Soporte oficial de `npm`, `pnpm`, `yarn` y `bun` en generación de proyectos. *(Parsing de flags OK; tests de integración multi-PM pendientes)*
 
-### ✨ Fase 2: Flexibilidad Interna y DX (v0.6.x - v0.8.x)
-*El objetivo es refinar la Experiencia del Desarrollador (DX) al usar el comando y dar soporte a estructuras más complejas.*
+### ✨ Fase 2: Flexibilidad Interna y DX (v0.6.x)
+*Refinar la Experiencia del Desarrollador (DX) y soportar estructuras más complejas.*
 
-- [x] **Soporte Oficial para Workspaces:** Detección automática y configuración sin fricción si el CLI se ejecuta dentro de un monorepo (Turborepo, pnpm workspaces, etc.).
-- [x] **Pulido Visual del CLI:** Mejorar la salida en terminal (spinners atractivos, colores semánticos, mensajes de progreso claros, y un bloque de "Próximos pasos" impecable).
-- [x] *(Opcional)* **Templates Internos M5:** Introducción del flag `--template api` para generar un proyecto exclusivamente backend sin React.
+- [x] **Soporte Oficial para Workspaces:** Detección automática si el CLI se ejecuta dentro de un monorepo (Turborepo, pnpm workspaces, etc.), desactivando `git init` para evitar anidamiento accidental.
+- [x] **Pulido Visual del CLI:** `@clack/prompts` con spinners, colores semánticos, cancelaciones limpias y bloque de "Próximos pasos".
+- [x] **Template API (`--template api`):** Proyecto Next.js exclusivamente backend sin React, con arquitectura lista para producción.
 
-### 📚 Fase 3: Adopción y Documentación (v0.9.x)
-*El objetivo es preparar el proyecto para el mundo exterior y escalar su uso.*
+### 📚 Fase 3: Adopción y Documentación (v0.7.x - v0.9.x)
+*Preparar el proyecto para el mundo exterior y escalar su uso.*
 
-- [ ] **Sitio Web de Documentación:** Migrar de un simple README a una web de docs interactiva (usando VitePress o Nextra).
-- [ ] **Material de Onboarding:** Grabación y publicación de un video demo (2-4 min) mostrando la integración perfecta entre el scaffolder y OpenClaw.
-- [ ] **Release Candidate (v1.0.0-rc):** Congelamiento de nuevas features. Llamado a beta testers para probar la herramienta en la vida real.
+- [ ] **Sitio Web de Documentación:** Migrar de un simple README a una web de docs interactiva (VitePress o Nextra).
+- [ ] **Material de Onboarding:** Video demo de 2-4 min mostrando la integración entre el scaffolder y AI agents.
+- [ ] **Polish de Release Candidate:** Beta testing comunitario y congelamiento de la API de comandos.
 
 ---
 
@@ -49,4 +56,4 @@ Para alcanzar esto, dividiremos el trabajo en las siguientes tres fases:
 
 ## 🔮 Futuro (Post v1.0.0)
 *(Ver `FUTURE.md` para más detalles)*
-Una vez alcanzada la estabilidad v1.0.0, se desbloquearán iniciativas mayores como la creación de la familia de scaffolders (`create-stack-remix`, `create-stack-astro`) y la delegación de tareas automatizadas a sub-agentes de OpenClaw.
+Una vez alcanzada la estabilidad v1.0.0, se desbloquearán iniciativas mayores como la familia de scaffolders (`create-stack-remix`, `create-stack-astro`) y la delegación de tareas automatizadas a sub-agentes de OpenClaw.

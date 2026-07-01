@@ -1,47 +1,34 @@
 # Handover — create-stack-next
 
-**Fecha:** 2026-06-28  
-**Última versión:** `0.3.0`
+**Fecha:** 2026-07-01
+**Última versión:** `0.6.1`
 
 ---
 
 ## Estado actual del proyecto
 
 ### Versiones cerradas
-- M0: Definición ✅
-- M1: MVP ✅
-- M2: AI-native ✅
-- M3: Familia de scaffolders → **Pausado** (ver `FUTURE.md`)
-- M4: Adopción (Lite) → En progreso
+- **Fase 1 (Robustez Absoluta):** ✅ Completada en v0.5.x
+- **Fase 2 (Flexibilidad Interna y DX):** ✅ Completada en v0.6.1
+- **Fase 3 (Adopción y Documentación):** ⏳ En progreso
 
-### Entregables de M4 Lite completados
-- ✅ README completamente reescrito y pulido
-- ✅ Release note v0.3.0 escrito
-- ⏸️ Video demo (pospuesto)
+### Entregables de Fase 2 completados
+- ✅ Template `--template api` (backend puro Next.js App Router, Drizzle ORM + SQLite, Zod, middleware Bearer/API Key, tests con `node-mocks-http`).
+- ✅ AI-Native workflow: `AGENTS.md`, `ROADMAP.md`, `AGENT_TASKS.md`, `HANDOFF.md` y ADRs semilla inyectados en ambos templates.
+- ✅ Soporte de workspaces con detección automática y desactivación inteligente de `git init`.
+- ✅ Pulido visual del CLI con `@clack/prompts` (spinners, colores semánticos, cancelaciones limpias, bloque "Próximos pasos").
+- ✅ CI/CD de GitHub Actions en el repositorio central (lint, typecheck, Playwright).
+- ✅ Fix del error `ERESOLVE` de npm fijando React de forma armónica para Next.js 15.
 
 ### Tests del scaffolder
-- `cli.test.ts` (13 tests)
-- `copy-template.test.ts` (2 tests)
-- `integration.test.ts` (1 test)
-- **Total: 16 tests pasando**
+- 55 tests pasando con `npm run test:run`.
+- `vitest.config.ts` aísla estrictamente `src/` para evitar colisiones con tests anidados en `template/`.
 
 ### Cambios principales en esta sesión
-- Identidad actualizada: **Kanam** (Lumen + jovial / anime coqueta / cálida)
-- Prompts de agentes traducidos al español
-- `docs/architecture.md` actualizado con sección de AI agents
-- `CHANGELOG.md` actualizado hasta 0.3.0
-- `FUTURE.md` creado (proyectos futuros)
-- `HANDOFF.md` (este archivo)
-
-### Documentación actualizada
-- `README.md`
-- `CHANGELOG.md`
-- `IDENTITY.md`
-- `SOUL.md`
-- `MEMORY.md`
-- `FUTURE.md`
-- `HANDOFF.md`
-- `test-spec.md`
+- Actualización de `ROADMAP.md` a v0.6.1.
+- Actualización de `HANDOFF.md` (este archivo).
+- Actualización de `FUTURE.md` quitando ideas ya implementadas.
+- Ajuste de `AGENT_TASKS.md` para reflejar Fase 3 activa.
 
 ---
 
@@ -49,19 +36,19 @@
 
 Cuando se retome el proyecto, se recomienda revisar:
 
-1. `README.md` (estado actual)
-2. `CHANGELOG.md` (historial de versiones)
-3. `FUTURE.md` (ideas futuras)
-4. `test-spec.md` (plan de tests)
+1. `ROADMAP.md` — estado actual de fases y épicas pendientes.
+2. `AGENT_TASKS.md` — sprint plan para la Fase 3.
+3. `CHANGELOG.md` — historial de versiones.
+4. `FUTURE.md` — ideas post-v1.0.0.
 
 ---
 
 ## Notas
 
-- M3 queda pausado hasta que `create-stack-next` alcance mayor madurez.
-- El release note v0.3.0 está listo para publicar en GitHub Releases.
+- Fase 2 se cerró oficialmente en v0.6.1; la siguiente release (v0.7.x) debe comenzar a trabajar épicas de Fase 3.
+- El soporte multi-package manager (`pnpm` / `yarn` / `bun`) quedó como deuda técnica de Fase 1; evaluar si se incluye en Fase 3 o se pospone.
 - Los prompts de agentes están en español (`.openclaw/prompts/` y `.agents/prompts/`).
 
 ---
 
-**Última actualización:** 2026-06-28 (Kanam)
+**Última actualización:** 2026-07-01

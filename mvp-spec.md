@@ -2,13 +2,15 @@
 
 > Documento de brief para sub-agentes y colaboradores. Define el alcance mínimo viable del scaffolder. Si algo no está acá, no es parte del MVP.
 
-**Estado:** ✅ v0.3.0 publicada. M0-M2 + M4 Lite cerrados. M3 pausado.
-**Fecha:** 2026-06-28 (M0/M1), actualizado 2026-06-29 (estado de versión).
-**Versión publicada:** `0.3.0` — https://www.npmjs.com/package/create-stack-next
+**Estado:** ✅ v0.6.1 publicada. Fase 1 (M0-M2 + Robustez) y Fase 2 (Flexibilidad/DX) cerradas. Fase 3 (Adopción) en progreso.
+**Fecha:** 2026-06-28 (M0/M1), actualizado 2026-06-29 (estado de versión), reconciliado 2026-07-01 (v0.6.1).
+**Versión publicada:** `0.6.1` — https://www.npmjs.com/package/create-stack-next
 **M0 cerrado:** ✅ producto, scope, distribución, framework, linter, testing, nombre.
 **M1 cerrado:** ✅ scaffolder funcional + template completo + repo público + npm publish.
 **M2 cerrado (2026-06-28):** ✅ AI-native (`npm run agent`, templates de prompts, `.openclaw/`).
 **M4 Lite cerrado:** ✅ README pulido, CHANGELOG, release notes, post LinkedIn.
+**Fase 1 cerrada (v0.5.x):** ✅ Robustez absoluta: tests exhaustivos del scaffolder, refactor de `cli.ts` para testabilidad, mejoras en Git init y UX de validación.
+**Fase 2 cerrada (v0.6.1):** ✅ Template API (`--template api`), AI-Native workflow injection, soporte de workspaces, pulido visual del CLI con `@clack/prompts`, CI/CD central, fix ERESOLVE de npm.
 
 ---
 
@@ -286,16 +288,24 @@ El MVP está listo cuando **todas** estas son verdaderas:
 | `npx` puede tener rate limiting o problemas de red | 🟢 Mitigado — documentado fallback con `npm i -g` en README |
 | El squat `create-stack` (sin sufijo) en npm puede confundir | 🟢 Vigente — sigue siendo squat (0.0.4, sin uso), no bloquea pero confunde |
 | Versión de Node del usuario: si tiene < 20, falla | 🟡 Vigente — `engines.node: ">=20"` en package.json, mensaje al inicio del scaffolder |
-| Conflictos con `--git` si el usuario ya tiene git config rara | 🟡 Vigente — `git init` falla limpio si no hay user.name/user.email |
-| Tests del scaffolder mismo (no solo del template) | 🟡 Vigente — pendiente, paralelo a M2 |
+| Conflictos con `--git` si el usuario ya tiene git config rara | 🟢 Mitigado — `git init` usa valores genéricos cuando no hay user.name/user.email |
+| Tests del scaffolder mismo (no solo del template) | 🟢 Cerrado — 55 tests pasando con Vitest + `node-mocks-http` en v0.6.1 |
+| Soporte multi-package manager (`pnpm`, `yarn`, `bun`) | 🟡 Vigente — parcial, pendiente de tests de integración |
+| Workspace detection en monorepos | 🟢 Mitigado — detección automática en v0.6.1 desactiva `git init` para evitar anidamiento |
 
 ---
 
 ## 11. Roadmap post-MVP (referencia, no es parte del MVP)
 
-- **M2 — AI-native:** comando `npm run agent`, templates de prompts por tipo de tarea, integración profunda con OpenClaw.
-- **M4 — Adoption:** docs site, video demo, blog post, presencia en awesome lists.
-- **M5 — Templates adicionales dentro del mismo scaffolder:** `--template api`, `--template cli`, etc. (Revierte D006/D011 parcialmente si la demanda lo justifica.)
+- **M2 — AI-native:** ✅ Cerrado. Comando `npm run agent`, templates de prompts por tipo de tarea, integración profunda con agentes genéricos.
+- **M4 Lite — README pulido:** ✅ Cerrado.
+- **M3 — Templates adicionales:** parcialmente iniciado.
+  - `--template api` ✅ cerrado en v0.6.1 (backend puro Next.js App Router + Drizzle + tests).
+  - `--template cli` y `--template tanstack` pendientes (ver `FUTURE.md`).
+- **Fase 3 — Adopción y Documentación:** ⏳ En progreso. Docs site, demo video, beta testers, pulido de release candidate.
+
+**Próximo paso:**
+1. Avanzar épicas de Fase 3 según `AGENT_TASKS.md` y `ROADMAP.md`.
 
 ---
 
@@ -314,5 +324,4 @@ Esto NO es parte del MVP. Es el siguiente paso del usuario, no nuestro.
 ---
 
 **Próximo paso:**
-1. Implementar M2 (D018): `npm run agent` + templates de prompts + `.openclaw/` específico.
-2. Tests del scaffolder mismo (paralelo, no bloqueante).
+1. Avanzar épicas de Fase 3 según `AGENT_TASKS.md` y `ROADMAP.md`.
