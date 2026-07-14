@@ -68,10 +68,13 @@ describe("copyTemplate", () => {
 		const templateFiles = await listFiles(templateDir);
 		const targetFiles = await listFiles(targetDir);
 
-		// Cada archivo del template debe existir en el destino
+		// Cada archivo del template debe existir en el destino,
+		// con excepción de los dotfiles que se renombran (gitignore → .gitignore)
+		const renames: Record<string, string> = { gitignore: ".gitignore" };
 		for (const file of templateFiles) {
-			expect(targetFiles, `Archivo faltante en destino: ${file}`).toContain(
-				file,
+			const expectedFile = renames[file] ?? file;
+			expect(targetFiles, `Archivo faltante en destino: ${expectedFile}`).toContain(
+				expectedFile,
 			);
 		}
 	});
@@ -176,6 +179,6 @@ describe("listFiles", () => {
 		const templateDir = join(process.cwd(), "template");
 		const files = await listFiles(templateDir);
 
-		expect(files).toContain(".gitignore");
+		expect(files).toContain("gitignore");
 	});
 });

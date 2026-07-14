@@ -1,0 +1,11 @@
+# Excluir lo que no vamos a publicar
+node_modules/
+coverage/
+playwright-report/
+test-results/
+*.log
+.DS_Store
+
+# Pero incluir TODO lo del template, incluyendo dotfiles
+!template/**
+!template-api/**

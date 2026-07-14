@@ -1,4 +1,4 @@
-import { cp, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
 
 export type CopyOptions = {
@@ -36,6 +36,7 @@ export async function copyTemplate(
 	// Hoy solo es package.json (su nombre), pero dejamos la puerta abierta.
 	await customizePackageJson(targetDir, options.projectName);
 	await customizeReadme(targetDir, options.projectName, options.pm);
+	await renameDotfiles(targetDir);
 }
 
 /**
@@ -119,4 +120,28 @@ export async function listFiles(dir: string): Promise<string[]> {
 // Helper exportado por si lo queremos usar en cli.ts para logging
 export function getRelativePath(from: string, to: string): string {
 	return relative(dirname(from), to);
+}
+
+/**
+ * Renombra archivos que npm excluye (como .gitignore) de su versión sin punto
+ * a la versión con punto en el destino.
+ *
+ * npm no publica archivos llamados .gitignore, así que en el template los
+ * guardamos como 'gitignore' (sin punto) y los renombramos al copiar.
+ */
+async function renameDotfiles(targetDir: string): Promise<void> {
+	const renames: Record<string, string> = {
+		gitignore: ".gitignore",
+	};
+
+	for (const [from, to] of Object.entries(renames)) {
+		const fromPath = join(targetDir, from);
+		const toPath = join(targetDir, to);
+		try {
+			await cp(fromPath, toPath);
+			await rm(fromPath);
+		} catch {
+			// Si el archivo no existe, no hay nada que renombrar
+		}
+	}
 }
