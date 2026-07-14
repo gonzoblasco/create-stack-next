@@ -44,6 +44,37 @@ npm run agent        # abrir sesión con OpenClaw (usa .openclaw/ + AGENTS.md)
 - `docs/` — arquitectura, decisiones y guías de contribución
 - `.openclaw/` — config y prompts específicos de OpenClaw
 - `.agents/` — config y prompts genéricos (compartidos entre agentes)
+- `openspec/` — specs y cambios (Spec-Driven Development con OpenSpec)
+
+## Desarrollo por Especificaciones (Spec-Driven Development)
+
+Este proyecto incluye [OpenSpec](https://github.com/Fission-AI/OpenSpec) para desarrollo guiado por especificaciones. La idea central: **acordar qué construir antes de escribir código**.
+
+### Estructura
+
+- `openspec/specs/` — fuente de verdad: cómo funciona el sistema HOY
+- `openspec/changes/` — cambios propuestos (uno por carpeta)
+- `openspec/changes/archive/` — cambios completados
+- `openspec/config.yaml` — configuración de OpenSpec
+
+### Flujo de trabajo con IA
+
+En vez de pedirle cosas sueltas a la IA, usá los slash commands de OpenSpec:
+
+1. **`/opsx:explore`** — pensá con la IA antes de comprometerte (opcional)
+2. **`/opsx:propose "nombre-del-cambio"`** — la IA crea la propuesta: proposal.md, specs, design.md, tasks.md
+3. **Revisás y ajustás** el plan generado
+4. **`/opsx:apply`** — la IA implementa los tasks
+5. **`/opsx:archive`** — los delta specs se mergean a `specs/`, el cambio se archiva
+
+### Cuándo usar OpenSpec
+
+- ✅ Features nuevas, refactorings grandes, cambios de comportamiento
+- ❌ Fix de una línea, typos, cambios triviales (no justifican la ceremonia)
+
+### Specs como fuente de verdad
+
+Las specs en `openspec/specs/` describen cómo funciona el sistema **hoy**. Cuando armás un cambio, no reescribís toda la spec: escribís un **delta** (ADDED/MODIFIED/REMOVED). Al archivar, el delta se mergea a las specs principales.
 
 ## Estructura importante
 
@@ -64,14 +95,15 @@ Si acabas de crear este proyecto con `create-stack-next`, abre tu agente de IA (
 Como agente de IA que trabaja en este proyecto, DEBES seguir este ciclo de manera autónoma para cada tarea de desarrollo:
 
 1. **Recuperación de Contexto (Fuente de Verdad):** Antes de tomar CUALQUIER acción, DEBES leer `ROADMAP.md`, `AGENT_TASKS.md`, `docs/decisions.md`, y `CHANGELOG.md`. Esta es la fuente de verdad del proyecto.
-2. **Alineación de Requisitos:** Antes de programar, valida los detalles clave del módulo con el humano.
-3. **Plan de Implementación:** Si la tarea es compleja, crea un plan de implementación (`implementation_plan.md`) y espera la aprobación explícita del desarrollador.
-4. **Lista de Tareas (`AGENT_TASKS.md`):** Lleva el control del progreso de las tareas usando marcas `[ ]`, `[/]` y `[x]`. Al finalizar la fase, mueve este archivo a `docs/phases/phaseX_tasks.md` y crea uno nuevo.
-5. **Auto-Documentación y Persistencia (ADR):** Si tomas decisiones técnicas o de producto, documéntalas en `docs/decisions.md` (formato ADR). Si alcanzas el límite de contexto o cortas la sesión, deja un resumen en `HANDOFF.md`.
-6. **Mantenimiento del Árbol de Carpetas:** Actualiza `docs/architecture.md` si cambias la estructura.
-7. **Mantenimiento del Changelog:** Registra SIEMPRE todos los cambios realizados en el archivo `CHANGELOG.md` en la sección `[Unreleased]`.
-8. **Auto-Commit:** Al finalizar con éxito una tarea o fase, realiza el git commit correspondiente de forma atómica.
-9. **Walkthrough:** Genera o actualiza el archivo `walkthrough.md` detallando qué archivos cambiaron y cómo probarlos.
+2. **Specs primero:** Si el proyecto tiene OpenSpec configurado, usá los slash commands (`/opsx:propose`, `/opsx:apply`, `/opsx:archive`) para cambios de comportamiento. Las specs en `openspec/specs/` son la fuente de verdad del sistema.
+3. **Alineación de Requisitos:** Antes de programar, valida los detalles clave del módulo con el humano.
+4. **Plan de Implementación:** Si la tarea es compleja, crea un plan de implementación (`implementation_plan.md`) y espera la aprobación explícita del desarrollador.
+5. **Lista de Tareas (`AGENT_TASKS.md`):** Lleva el control del progreso de las tareas usando marcas `[ ]`, `[/]` y `[x]`. Al finalizar la fase, mueve este archivo a `docs/phases/phaseX_tasks.md` y crea uno nuevo.
+6. **Auto-Documentación y Persistencia (ADR):** Si tomas decisiones técnicas o de producto, documéntalas en `docs/decisions.md` (formato ADR). Si alcanzas el límite de contexto o cortas la sesión, deja un resumen en `HANDOFF.md`.
+7. **Mantenimiento del Árbol de Carpetas:** Actualiza `docs/architecture.md` si cambias la estructura.
+8. **Mantenimiento del Changelog:** Registra SIEMPRE todos los cambios realizados en el archivo `CHANGELOG.md` en la sección `[Unreleased]`.
+9. **Auto-Commit:** Al finalizar con éxito una tarea o fase, realiza el git commit correspondiente de forma atómica.
+10. **Walkthrough:** Genera o actualiza el archivo `walkthrough.md` detallando qué archivos cambiaron y cómo probarlos.
 
 ## Lo que el agente puede hacer
 

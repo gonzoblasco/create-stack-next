@@ -6,8 +6,22 @@ import { fileURLToPath } from "node:url";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { copyTemplate } from "./copy-template.js";
+import { runOpenSpecInit } from "./openspec-init.js";
 import { type Args, parseArgs } from "./parse-args.js";
 import { isInsideWorkspace } from "./workspace.js";
+
+/** Herramientas IA soportadas por OpenSpec para el select interactivo. */
+const AI_TOOLS = [
+	{ value: "claude", label: "Claude Code", hint: ".claude/" },
+	{ value: "cursor", label: "Cursor", hint: ".cursor/" },
+	{ value: "windsurf", label: "Windsurf", hint: ".windsurf/" },
+	{ value: "github-copilot", label: "GitHub Copilot", hint: ".github/" },
+	{ value: "cline", label: "Cline", hint: ".cline/" },
+	{ value: "codex", label: "Codex", hint: ".codex/" },
+] as const;
+
+/** Valores pre-seleccionados por defecto. */
+const DEFAULT_TOOLS = ["claude", "cursor"];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -28,6 +42,7 @@ ${pc.bold("Uso:")}
 ${pc.bold("Opciones:")}
   ${pc.yellow("--no-git")}          No inicializa git ni hace commit inicial
   ${pc.yellow("--no-install")}      No corre npm install después de generar
+  ${pc.yellow("--no-openspec")}    No inicializa OpenSpec (Spec-Driven Development)
   ${pc.yellow("--pm <nombre>")}     Package manager: ${pc.cyan("npm")}, ${pc.cyan("pnpm")}, ${pc.cyan("yarn")}, ${pc.cyan("bun")} (default: ${pc.cyan("npm")})
 
 ${pc.bold("Ejemplos:")}
@@ -256,6 +271,7 @@ export async function run(): Promise<void> {
 	const pm = args.pm ?? "npm";
 	const git = args.git !== false;
 	const install = args.install !== false;
+	const openspec = args.openspec !== false;
 
 	p.intro(pc.bgCyan(pc.black(" create-stack-next ")));
 
@@ -287,7 +303,30 @@ export async function run(): Promise<void> {
 		);
 		s.stop("Configuración lista");
 
-		// 4. Instalar deps
+		// 4. Seleccionar herramientas IA para OpenSpec (antes de install)
+		let selectedTools: string[] = DEFAULT_TOOLS;
+		if (openspec) {
+			const toolSelection = await p.multiselect({
+				message:
+					"Seleccioná tus herramientas de IA para Spec-Driven Development",
+				options: AI_TOOLS.map((t) => ({
+					value: t.value,
+					label: t.label,
+					hint: t.hint,
+				})),
+				initialValues: DEFAULT_TOOLS,
+				required: false,
+			});
+
+			if (p.isCancel(toolSelection)) {
+				p.cancel("Operación cancelada.");
+				process.exit(1);
+			}
+
+			selectedTools = toolSelection as string[];
+		}
+
+		// 5. Instalar deps
 		if (install) {
 			s.start(`Instalando dependencias via ${pm}`);
 			try {
@@ -302,7 +341,24 @@ export async function run(): Promise<void> {
 			}
 		}
 
-		// 5. Git init
+		// 6. OpenSpec init (Spec-Driven Development)
+		if (openspec && selectedTools.length > 0) {
+			s.start("Configurando OpenSpec (Spec-Driven Development)");
+			try {
+				await runOpenSpecInit(projectDir, selectedTools);
+				s.stop("OpenSpec configurado correctamente");
+			} catch (err) {
+				s.stop(
+					"OpenSpec no pudo inicializarse (estructura base ya copiada del template)",
+				);
+				p.note(
+					`Podés configurarlo manualmente después con ${pc.cyan("npx @fission-ai/openspec init")}.\n${err instanceof Error ? err.message : String(err)}`,
+					"OpenSpec",
+				);
+			}
+		}
+
+		// 7. Git init
 		if (git) {
 			const inWorkspace = await isInsideWorkspace(process.cwd());
 			if (inWorkspace) {
@@ -322,13 +378,15 @@ export async function run(): Promise<void> {
 			}
 		}
 
-		// 6. Mensaje final
+		// 8. Mensaje final
 		const nextSteps = [
 			`cd ${projectName}`,
 			`${pm} run dev          ${pc.dim("# Arrancar servidor de desarrollo")}`,
 			`${pm} run test         ${pc.dim("# Correr tests unitarios")}`,
 			`${pm} run test:e2e     ${pc.dim("# Correr tests e2e")}`,
 			`${pm} run lint         ${pc.dim("# Ejecutar Biome (linter + format)")}`,
+			"",
+			`${pc.cyan('/opsx:propose "tu primera feature"')}  ${pc.dim("# Iniciar desarrollo con specs")}`,
 		];
 
 		p.note(nextSteps.join("\n"), "Próximos pasos");

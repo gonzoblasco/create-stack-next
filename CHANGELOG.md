@@ -13,6 +13,24 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 
 - Actualización de `ROADMAP.md`, `HANDOFF.md`, `AGENT_TASKS.md` y `FUTURE.md` para reflejar el estado actual del proyecto tras el cierre de la Fase 2.
 
+## [0.7.0] - 2026-07-14
+
+### Added
+
+- **Spec-Driven Development integrado con OpenSpec**: todos los proyectos generados ahora incluyen [OpenSpec](https://github.com/Fission-AI/OpenSpec) pre-configurado. El scaffolder pregunta qué herramientas de IA usás (Claude Code, Cursor, Windsurf, GitHub Copilot, Cline, Codex) e instala los skills y slash commands correspondientes.
+  - Flujo `/opsx:propose` → `/opsx:apply` → `/opsx:archive` listo para usar desde el día 1.
+  - Estructura `openspec/` pre-armada en el template como fallback si `openspec init` falla (sin internet, npm caído, etc.).
+  - `@fission-ai/openspec` agregado como `devDependency` en los proyectos generados.
+  - AGENTS.md actualizado con sección SDD: specs como fuente de verdad, delta specs, flujo explore→propose→apply→archive.
+  - README de los proyectos generados incluye sección "Desarrollo por Especificaciones".
+  - Nuevo flag `--no-openspec` para saltear la inicialización de OpenSpec.
+  - Próximos pasos en el CLI ahora incluye `/opsx:propose "tu primera feature"`.
+
+### Changed
+
+- OpenSpec init se ejecuta **antes** de `git init` para que los skills y comandos queden en el commit inicial.
+- README principal del repo actualizado con tabla comparativa (Spec-Driven Development: Ninguno vs OpenSpec integrado).
+
 ## [0.6.2] - 2026-07-14
 
 ### Fixed
@@ -135,7 +153,8 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - Publicación en npm.
 - Repo público en GitHub.
 
-[Unreleased]: https://github.com/gonzoblasco/create-stack-next/compare/v0.6.2...HEAD
+[Unreleased]: https://github.com/gonzoblasco/create-stack-next/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/gonzoblasco/create-stack-next/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/gonzoblasco/create-stack-next/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/gonzoblasco/create-stack-next/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/gonzoblasco/create-stack-next/compare/v0.5.0...v0.6.0

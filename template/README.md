@@ -69,6 +69,35 @@ Este proyecto incluye `AGENTS.md` con instrucciones para AI agents (OpenClaw, Cl
 - `docs/` — arquitectura, decisiones y guías de contribución
 - `.openclaw/` — config y prompts específicos de OpenClaw
 - `.agents/` — config y prompts genéricos (compartidos)
+- `openspec/` — specs y cambios (Spec-Driven Development)
+
+## Desarrollo por Especificaciones (Spec-Driven Development)
+
+Este proyecto incluye [OpenSpec](https://github.com/Fission-AI/OpenSpec), un framework de desarrollo guiado por especificaciones. La idea: **acordar qué construir antes de escribir código**.
+
+### ¿Por qué?
+
+Los agentes de IA son rápidos generando código, pero malos recordando qué pediste a lo largo de una sesión larga. OpenSpec pone la spec como fuente de verdad en vez del historial de chat.
+
+### Flujo básico
+
+1. **`/opsx:explore`** — (opcional) pensá la idea con la IA antes de comprometerte
+2. **`/opsx:propose "mi-feature"`** — la IA crea propuesta + specs + design + tasks
+3. **Revisás el plan** y ajustás lo que haga falta
+4. **`/opsx:apply`** — la IA implementa los tasks
+5. **`/opsx:archive`** — los cambios se mergean a las specs y se archiva
+
+### Estructura
+
+```
+openspec/
+├── specs/           # fuente de verdad (cómo funciona HOY)
+├── changes/         # cambios propuestos
+│   └── archive/     # cambios completados
+└── config.yaml      # configuración
+```
+
+Para cambios triviales (un typo, un fix de una línea) no hace falta usar OpenSpec. Usalo donde querés alinear expectativas con la IA.
 
 ## CI/CD
 

@@ -12,6 +12,8 @@ export type Args = {
 	install?: boolean;
 	/** Package manager: npm | pnpm | yarn | bun (default: npm) */
 	pm?: string;
+	/** Inicializar OpenSpec (default: true). false si se pasa --no-openspec */
+	openspec?: boolean;
 	/** Template to use: app | api (default: app) */
 	template?: string;
 };
@@ -44,6 +46,9 @@ export function parseArgs(argv: string[]): Args {
 				break;
 			case "--no-install":
 				args.install = false;
+				break;
+			case "--no-openspec":
+				args.openspec = false;
 				break;
 			case "--pm": {
 				const next = argv[i + 1];

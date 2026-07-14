@@ -34,3 +34,27 @@ Este es un proyecto generado con `create-stack-next --template api`. Es una estr
 ## 🤖 Desarrollo con IA
 
 Revisa el archivo `AGENTS.md` para conocer las reglas y flujos de trabajo recomendados para interactuar con IAs (Cursor, OpenClaw) en este repositorio.
+
+### Desarrollo por Especificaciones (Spec-Driven Development)
+
+Este proyecto incluye [OpenSpec](https://github.com/Fission-AI/OpenSpec), un framework de desarrollo guiado por especificaciones. La idea: **acordar qué construir antes de escribir código**.
+
+#### Flujo básico
+
+1. **`/opsx:explore`** — (opcional) pensá la idea con la IA antes de comprometerte
+2. **`/opsx:propose "mi-feature"`** — la IA crea propuesta + specs + design + tasks
+3. **Revisás el plan** y ajustás lo que haga falta
+4. **`/opsx:apply`** — la IA implementa los tasks
+5. **`/opsx:archive`** — los cambios se mergean a las specs y se archiva
+
+#### Estructura
+
+```
+openspec/
+├── specs/           # fuente de verdad (cómo funciona HOY)
+├── changes/         # cambios propuestos
+│   └── archive/     # cambios completados
+└── config.yaml      # configuración
+```
+
+Para cambios triviales no hace falta usar OpenSpec. Usalo donde querés alinear expectativas con la IA.

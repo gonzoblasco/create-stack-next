@@ -1,6 +1,6 @@
 {
 	"name": "create-stack-next",
-	"version": "0.6.2",
+	"version": "0.7.0",
 	"description": "Scaffolder opinado para proyectos Next.js 15 con TypeScript estricto, Biome, Vitest, Playwright y AI agent config preinstalado.",
 	"type": "module",
 	"bin": {

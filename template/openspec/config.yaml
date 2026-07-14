@@ -1,0 +1,20 @@
+schema: spec-driven
+
+# Contexto del proyecto (opcional)
+# Se muestra a la IA al crear artifacts.
+# Agregá tu tech stack, convenciones, guías de estilo, etc.
+# Ejemplo:
+#   context: |
+#     Tech stack: TypeScript, React, Next.js, Biome
+#     Usamos conventional commits
+#     Dominio: e-commerce
+
+# Reglas por artifact (opcional)
+# Agregá reglas custom para artifacts específicos.
+# Ejemplo:
+#   rules:
+#     proposal:
+#       - Mantener las propuestas bajo 500 palabras
+#       - Siempre incluir una sección "Non-goals"
+#     tasks:
+#       - Dividir las tareas en chunks de máximo 2 horas

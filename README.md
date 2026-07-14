@@ -29,6 +29,7 @@ El proyecto generado viene con todo preconfigurado:
 - **Vitest** (tests unitarios) + **Playwright** (tests e2e)
 - **Zod** para validación runtime
 - **GitHub Actions** (CI + e2e)
+- **OpenSpec** — Spec-Driven Development integrado (specs + slash commands para IA)
 - **AGENTS.md** + workflow de IA inyectado para desarrollo asistido
 - `docs/` con arquitectura, decisiones y guía de contribución
 
@@ -50,6 +51,7 @@ Si preferís generar un backend puramente funcional sin React components:
 | Linter | ESLint + Prettier | Biome (un solo binario) |
 | TypeScript | Básico | Estricto + `noUncheckedIndexedAccess` |
 | AI agents | Ninguno | `AGENTS.md` + prompts listos para usar |
+| Spec-Driven Development | Ninguno | OpenSpec integrado (specs + slash commands) |
 | CI | Ninguno | GitHub Actions incluido |
 | Filosofía | Mínimo | Opinado con defaults 2026 |
 
@@ -72,7 +74,20 @@ El proyecto incluye:
 - `AGENTS.md` — instrucciones agnósticas (funciona con OpenClaw, Claude Code, Cursor, etc.)
 - `.openclaw/` — config y prompts específicos de OpenClaw
 - `.agents/` — config genérica + prompts compartidos
+- `openspec/` — Spec-Driven Development con OpenSpec (specs, changes, slash commands)
 - `npm run agent` — abre sesión con el agente ya contextualizado
+
+### Spec-Driven Development con OpenSpec
+
+Desde la v0.7.0, todos los proyectos generados incluyen [OpenSpec](https://github.com/Fission-AI/OpenSpec) pre-configurado. Esto significa que tu IA trabaja con especificaciones en vez de prompts vagos:
+
+```bash
+/opsx:propose "agregar autenticación"   # la IA crea propuesta + specs + tasks
+/opsx:apply                              # la IA implementa
+/opsx:archive                            # specs actualizadas, cambio archivado
+```
+
+Durante el scaffolding, el CLI te pregunta qué herramientas de IA usás (Claude Code, Cursor, etc.) e instala los skills y slash commands correspondientes.
 
 ---
 
