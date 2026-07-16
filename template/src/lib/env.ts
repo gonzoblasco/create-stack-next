@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 /**
  * Validación runtime de variables de entorno.
@@ -17,22 +17,20 @@ import { z } from "zod";
  */
 
 const envSchema = z.object({
-	NODE_ENV: z
-		.enum(["development", "test", "production"])
-		.default("development"),
+  NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
 
-	// Acá se suman más variables a medida que el proyecto las necesite.
-	// Ejemplo:
-	// DATABASE_URL: z.string().url(),
-	// API_KEY: z.string().min(1),
-});
+  // Acá se suman más variables a medida que el proyecto las necesite.
+  // Ejemplo:
+  // DATABASE_URL: z.string().url(),
+  // API_KEY: z.string().min(1),
+})
 
-const parsed = envSchema.safeParse(process.env);
+const parsed = envSchema.safeParse(process.env)
 
 if (!parsed.success) {
-	console.error("❌ Variables de entorno inválidas:");
-	console.error(parsed.error.flatten().fieldErrors);
-	throw new Error("Invalid environment variables");
+  console.error('❌ Variables de entorno inválidas:')
+  console.error(parsed.error.flatten().fieldErrors)
+  throw new Error('Invalid environment variables')
 }
 
-export const env = parsed.data;
+export const env = parsed.data

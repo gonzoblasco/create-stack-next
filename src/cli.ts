@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { constants, accessSync, existsSync, readdirSync } from "node:fs";
+import { accessSync, constants, existsSync, readdirSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -119,7 +119,7 @@ export function validateProjectName(
 	return { ok: true };
 }
 
-function logStep(emoji: string, message: string): void {
+function _logStep(emoji: string, message: string): void {
 	console.log(`  ${emoji}  ${message}`);
 }
 

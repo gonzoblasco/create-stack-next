@@ -1,12 +1,18 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.5.4/schema.json",
+	"root": true,
 	"files": {
+		"ignoreUnknown": true,
 		"includes": [
 			"**",
 			"!**/dist/",
+			"!**/dist",
 			"!**/node_modules/",
-			"!**/template/",
-			"!**/template-api/"
+			"!**/node_modules",
+			"!template/",
+			"!template",
+			"!template-api/",
+			"!template-api"
 		]
 	}
 }

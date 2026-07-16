@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 /**
  * Health check endpoint.
@@ -11,9 +11,9 @@ import { NextResponse } from "next/server";
  * Retorna 200 con info básica del entorno.
  */
 export function GET() {
-	return NextResponse.json({
-		status: "ok",
-		timestamp: new Date().toISOString(),
-		uptime: process.uptime(),
-	});
+  return NextResponse.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  })
 }

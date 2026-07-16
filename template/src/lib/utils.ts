@@ -16,8 +16,6 @@
  * Combina classNames. Reemplaza al clásico `clsx` para casos simples.
  * Para lógica más compleja (conditional classes, dedupe), usar `clsx` directamente.
  */
-export function cn(
-	...classes: Array<string | false | null | undefined>
-): string {
-	return classes.filter(Boolean).join(" ");
+export function cn(...classes: Array<string | false | null | undefined>): string {
+  return classes.filter(Boolean).join(' ')
 }

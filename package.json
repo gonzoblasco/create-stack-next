@@ -6,7 +6,11 @@
 	"bin": {
 		"create-stack-next": "dist/index.js"
 	},
-	"files": ["dist", "template", "template-api"],
+	"files": [
+		"dist",
+		"template",
+		"template-api"
+	],
 	"scripts": {
 		"build": "tsc",
 		"dev": "tsc --watch",
