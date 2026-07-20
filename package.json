@@ -8,8 +8,7 @@
 		"@gonzoblasco/create-stack": "dist/index.js"
 	},
 	"files": [
-		"dist",
-		"scripts"
+		"dist"
 	],
 	"scripts": {
 		"build": "tsc && node scripts/copy-templates.mjs",
