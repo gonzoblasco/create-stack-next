@@ -11,7 +11,10 @@ describe('Healthcheck API', () => {
     // En Next.js App Router, las request no siempre se comportan como IncomingMessage estándar.
     // node-mocks-http nos ayuda a simular un request/response básico para testing directo de handlers.
     const response = await GET()
-    const data = await response.json()
+    const data = (await response.json()) as {
+      success: boolean
+      data: { status: string; uptime: number }
+    }
 
     expect(response.status).toBe(200)
     expect(data.success).toBe(true)
