@@ -9,10 +9,10 @@
 	},
 	"files": [
 		"dist",
-		"src/stacks"
+		"scripts"
 	],
 	"scripts": {
-		"build": "tsc",
+		"build": "tsc && node scripts/copy-templates.mjs",
 		"dev": "tsc --watch",
 		"start": "node ./dist/index.js",
 		"lint": "biome check .",
