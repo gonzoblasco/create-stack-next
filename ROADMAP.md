@@ -1,6 +1,6 @@
 # Roadmap
 
-## Estado actual (v0.8.0 — Reidentificación)
+## Estado actual (v0.8.1 — Reidentificación completa)
 
 - ✅ CLI con stack posicional (`npx @gonzoblasco/create-stack next my-app`)
 - ✅ Arquitectura modular de stacks (`src/stacks/<id>/`)
@@ -13,11 +13,12 @@
 - ✅ CI/CD con GitHub Actions (lint, typecheck, tests, build en 4 package managers)
 - ✅ Spec-Driven Development integrado con OpenSpec
 - ✅ 67 tests automáticos
+- ✅ Publicado en npm como `@gonzoblasco/create-stack`
+- ✅ Repo renombrado a `create-stack`
+- ✅ Release v0.8.1 en GitHub
 
 ## Próximos pasos
 
-- [ ] Publicar v0.8.0 en npm como `@gonzoblasco/create-stack`
-- [ ] Renombrar repo en GitHub a `create-stack`
 - [ ] Sitio de documentación (VitePress o Nextra)
 - [ ] Video demo de onboarding (2-4 min)
 - [ ] Tests de integración multi-package manager en CI
