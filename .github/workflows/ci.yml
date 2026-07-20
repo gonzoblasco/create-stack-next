@@ -35,7 +35,7 @@ jobs:
 
       # Core checks on all matrices (since it's cheap)
       - name: Install CLI dependencies
-        run: npm ci
+        run: npm install
 
       - name: Run Biome Lint
         run: npm run lint
