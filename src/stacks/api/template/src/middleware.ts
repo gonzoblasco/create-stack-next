@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/api') &&
     !request.nextUrl.pathname.startsWith('/api/health')
   ) {
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    if (!authHeader?.startsWith('Bearer ')) {
       return NextResponse.json(
         {
           success: false,

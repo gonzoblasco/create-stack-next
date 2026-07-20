@@ -1,6 +1,6 @@
-import type { StackConfig } from "./types.js";
-import { nextStack } from "./next/index.js";
 import { apiStack } from "./api/index.js";
+import { nextStack } from "./next/index.js";
+import type { StackConfig } from "./types.js";
 
 /**
  * Registry de todos los stacks disponibles.

@@ -189,9 +189,7 @@ describe("copyTemplate — stack api", () => {
 			pm: "npm",
 		});
 
-		const drizzleConfig = await stat(
-			join(targetDir, "drizzle.config.ts"),
-		);
+		const drizzleConfig = await stat(join(targetDir, "drizzle.config.ts"));
 		expect(drizzleConfig.isFile()).toBe(true);
 	});
 });
@@ -200,7 +198,13 @@ describe("copyTemplate — stack api", () => {
 
 describe("listFiles", () => {
 	it("devuelve la lista ordenada de archivos del template next", async () => {
-		const templateDir = join(process.cwd(), "src", "stacks", "next", "template");
+		const templateDir = join(
+			process.cwd(),
+			"src",
+			"stacks",
+			"next",
+			"template",
+		);
 		const files = await listFiles(templateDir);
 
 		expect(files.length).toBeGreaterThan(0);
@@ -209,7 +213,13 @@ describe("listFiles", () => {
 	});
 
 	it("incluye dotfiles en la lista", async () => {
-		const templateDir = join(process.cwd(), "src", "stacks", "next", "template");
+		const templateDir = join(
+			process.cwd(),
+			"src",
+			"stacks",
+			"next",
+			"template",
+		);
 		const files = await listFiles(templateDir);
 
 		expect(files).toContain("gitignore");

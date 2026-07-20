@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
 import { accessSync, constants, existsSync, readdirSync } from "node:fs";
-import { mkdir, writeFile, readFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as p from "@clack/prompts";
@@ -257,7 +257,9 @@ export async function run(): Promise<void> {
 			`   Uso: ${pc.cyan(`npx ${CLI_NAME}`)} ${pc.green("<stack>")} ${pc.green("[nombre]")}`,
 		);
 		console.error(
-			`   Stacks: ${listStacks().map((s) => pc.cyan(s.id)).join(", ")}`,
+			`   Stacks: ${listStacks()
+				.map((s) => pc.cyan(s.id))
+				.join(", ")}`,
 		);
 		process.exit(1);
 	}
@@ -266,7 +268,9 @@ export async function run(): Promise<void> {
 	if (!stackConfig) {
 		console.error(
 			pc.red("❌"),
-			`Stack "${stack}" no encontrado. Stacks disponibles: ${listStacks().map((s) => pc.cyan(s.id)).join(", ")}`,
+			`Stack "${stack}" no encontrado. Stacks disponibles: ${listStacks()
+				.map((s) => pc.cyan(s.id))
+				.join(", ")}`,
 		);
 		process.exit(1);
 	}

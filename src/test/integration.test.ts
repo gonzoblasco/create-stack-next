@@ -34,7 +34,13 @@ describe("Integration: full project generation — stack next", () => {
 	});
 
 	it("generates a project that passes lint, typecheck, test and build", async () => {
-		const templateDir = join(process.cwd(), "src", "stacks", "next", "template");
+		const templateDir = join(
+			process.cwd(),
+			"src",
+			"stacks",
+			"next",
+			"template",
+		);
 
 		await copyTemplate(templateDir, targetDir, {
 			projectName: "my-test-app",

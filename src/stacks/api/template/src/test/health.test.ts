@@ -4,7 +4,7 @@ import { GET } from '@/app/api/health/route'
 
 describe('Healthcheck API', () => {
   it('should return 200 and ok status', async () => {
-    const { req } = createMocks({
+    createMocks({
       method: 'GET',
     })
 

@@ -1,4 +1,4 @@
-import { isValidStack, listStacks } from "./stacks/index.js";
+import { isValidStack } from "./stacks/index.js";
 
 export type Args = {
 	/** Stack a usar (primer argumento posicional) */

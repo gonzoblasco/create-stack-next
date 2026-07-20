@@ -130,7 +130,13 @@ describe("OpenSpec — template api", () => {
 
 describe("OpenSpec — template app (next)", () => {
 	it("template next tiene @fission-ai/openspec en devDependencies", async () => {
-		const templateDir = join(process.cwd(), "src", "stacks", "next", "template");
+		const templateDir = join(
+			process.cwd(),
+			"src",
+			"stacks",
+			"next",
+			"template",
+		);
 		const pkg = JSON.parse(
 			await readFile(join(templateDir, "package.json"), "utf-8"),
 		);
