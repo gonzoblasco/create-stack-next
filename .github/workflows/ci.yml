@@ -6,73 +6,89 @@ on:
   pull_request:
 
 jobs:
-  test:
-    name: Test Generation with ${{ matrix.pm }}
+  # ─── Core checks: lint, typecheck, unit tests, build ───
+  core:
+    name: Core checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - name: Biome Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Unit Tests
+        run: npm run test:run
+      - name: Build CLI
+        run: npm run build
+
+  # ─── Project generation: testea que el CLI genera proyectos con cada PM ───
+  generate:
+    name: Generate with ${{ matrix.pm }}
+    needs: core
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         pm: [npm, pnpm, yarn, bun]
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-
       - name: Setup pnpm
         if: matrix.pm == 'pnpm'
         uses: pnpm/action-setup@v3
         with:
           version: 9
-
       - name: Setup bun
         if: matrix.pm == 'bun'
         uses: oven-sh/setup-bun@v1
-
-      # Core checks on all matrices (since it's cheap)
       - name: Install CLI dependencies
         run: npm install
-
-      - name: Run Biome Lint
-        run: npm run lint
-
-      - name: Run Typecheck
-        run: npm run typecheck
-
-      - name: Run Unit Tests
-        run: npm run test:run
-
       - name: Build CLI
         run: npm run build
-
-      - name: Test Project Generation — stack next (${{ matrix.pm }})
+      - name: Generate stack next (${{ matrix.pm }})
         run: |
           mkdir -p /tmp/test-gen
           cd /tmp/test-gen
           node $GITHUB_WORKSPACE/dist/index.js next test-app --pm ${{ matrix.pm }} --no-git --no-openspec
           cd test-app
-          
           if [ ! -d "node_modules" ]; then
             echo "❌ node_modules no fue creado por ${{ matrix.pm }}"
             exit 1
           fi
-          
           echo "✅ Generación e instalación exitosa con ${{ matrix.pm }} (stack next)"
-
-      - name: Test Project Generation — stack api (${{ matrix.pm }})
+      - name: Generate stack api (${{ matrix.pm }})
         run: |
           mkdir -p /tmp/test-gen-api
           cd /tmp/test-gen-api
           node $GITHUB_WORKSPACE/dist/index.js api test-api --pm ${{ matrix.pm }} --no-git --no-openspec
           cd test-api
-          
           if [ ! -d "node_modules" ]; then
             echo "❌ node_modules no fue creado por ${{ matrix.pm }}"
             exit 1
           fi
-          
           echo "✅ Generación e instalación exitosa con ${{ matrix.pm }} (stack api)"
+
+  # ─── Integration tests: verifica que el proyecto generado compile y pase checks ───
+  integration:
+    name: Integration tests
+    needs: core
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm install
+      - name: Build CLI
+        run: npm run build
+      - name: Run integration tests
+        run: npx vitest run src/test/integration.test.ts --reporter=verbose
+        timeout-minutes: 30
